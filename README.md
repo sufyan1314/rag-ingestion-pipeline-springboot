@@ -35,6 +35,9 @@ embedding VECTOR(768),
 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+Note: select vector dimension based on embedding model dimension, in my case it is 768.
+The dimension should be same otherwise it will be give the insertion error.
+
 10. Check status with below command
 
 | Command                    | What it does         |
@@ -58,3 +61,21 @@ POST'{
 "prompt": "test embedding"
 }'
 
+Embedding Models Verification:
+![img_1.png](img_1.png)
+
+
+Spring boot application running on 8080 port on windows
+![img_4.png](img_4.png)
+
+Console logs : Output 
+
+![img.png](img.png)
+
+Document Ingestion Logs:
+
+![img_2.png](img_2.png)
+
+Ingestion into database
+
+![img_3.png](img_3.png)
