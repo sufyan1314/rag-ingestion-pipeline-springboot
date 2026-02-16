@@ -79,3 +79,27 @@ Document Ingestion Logs:
 Ingestion into database
 
 ![img_3.png](img_3.png)
+
+
+Step 2: Now write a logic for retrieval so first create a index
+
+CREATE INDEX documents_embedding_idx
+ON documents
+USING ivfflat (embedding vector_cosine_ops)
+WITH (lists = 100);
+
+![img_5.png](img_5.png)
+
+API to fetch the retrieval
+http://localhost:8080/api/search?question=''
+
+![img_6.png](img_6.png)
+![img_7.png](img_7.png)
+
+the similarity scores:
+
+0.5409966213156661
+0.5409966213156661
+0.49826172775515276
+0.49826172775515276
+0.4861938731010216
