@@ -1,11 +1,10 @@
 package com.ai.rag_implementation.services;
 
-import com.ai.rag_implementation.dto.RetrievedChunk;
 import com.ai.rag_implementation.repositories.DocumentRepository;
+import com.ai.rag_implementation.repositories.SearchResultProjection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,27 +17,17 @@ public class RetrievalService {
     private static final int TOP_K = 5;
     private static final double MIN_SIMILARITY = 0.45;
 
-    public List<RetrievedChunk> retrieve(String question) {
+    public List<SearchResultProjection> retrieve(String question) {
 
         float[] queryEmbedding = embeddingService.embed(question);
         String vectorString = toPgVector(queryEmbedding);
-        List<Object[]> results = documentRepository.search(vectorString, TOP_K);
 
-        List<RetrievedChunk> chunks = new ArrayList<>();
+        List<SearchResultProjection> results =
+                documentRepository.search(vectorString, TOP_K);
 
-        for (Object[] row : results) {
-
-            Long id = ((Number) row[0]).longValue();
-            String content = (String) row[1];
-            Double similarity = ((Number) row[2]).doubleValue();
-
-            System.out.println(similarity);
-            if (similarity >= MIN_SIMILARITY) {
-                chunks.add(new RetrievedChunk(id, content, similarity));
-            }
-        }
-
-        return chunks;
+        return results.stream()
+                .filter(r -> r.getSimilarity() >= MIN_SIMILARITY)
+                .toList();
     }
 
     private String toPgVector(float[] vector) {

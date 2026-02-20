@@ -1,6 +1,7 @@
 package com.ai.rag_implementation.controller;
 
 import com.ai.rag_implementation.dto.RetrievedChunk;
+import com.ai.rag_implementation.repositories.SearchResultProjection;
 import com.ai.rag_implementation.services.RetrievalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class RetrievalController {
     private final RetrievalService retrievalService;
 
     @GetMapping("/search")
-    public List<RetrievedChunk> search(
+    public List<SearchResultProjection> search(
             @RequestParam String question) {
 
         return retrievalService.retrieve(question);

@@ -2,6 +2,7 @@ package com.ai.rag_implementation.services;
 
 import com.ai.rag_implementation.model.Document;
 import com.ai.rag_implementation.repositories.DocumentRepository;
+import com.ai.rag_implementation.util.PDFExtractor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,11 @@ public class IngestionService {
     private final EmbeddingService embeddingService;
     private final ChunkingService chunkingService;
     private final DocumentRepository documentRepository;
+    private final PDFExtractor pdfExtractor;
 
     public void ingest(String docName, String text) {
 
-        List<String> chunks = chunkingService.chunk(text);
+        List<String> chunks = chunkingService.chunk(pdfExtractor.cleanText(text));
 
         for (int i = 0; i < chunks.size(); i++) {
 

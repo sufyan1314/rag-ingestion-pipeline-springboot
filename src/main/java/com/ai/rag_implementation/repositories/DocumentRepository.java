@@ -11,15 +11,28 @@ import java.util.List;
 @Repository
 public interface DocumentRepository extends JpaRepository<Document, Long> {
 
+//    @Query(value = """
+//    SELECT id,
+//           content,
+//           1 - (embedding <=> CAST(:embedding AS vector)) AS similarity
+//    FROM documents
+//    ORDER BY embedding <=> CAST(:embedding AS vector)
+//    LIMIT :limit
+//""", nativeQuery = true)
+//    List<Object[]> search(
+//            @Param("embedding") String embedding,
+//            @Param("limit") int limit
+//    );
+
     @Query(value = """
-    SELECT id,
-           content,
+    SELECT id AS id,
+           content AS content,
            1 - (embedding <=> CAST(:embedding AS vector)) AS similarity
     FROM documents
     ORDER BY embedding <=> CAST(:embedding AS vector)
     LIMIT :limit
 """, nativeQuery = true)
-    List<Object[]> search(
+    List<SearchResultProjection> search(
             @Param("embedding") String embedding,
             @Param("limit") int limit
     );

@@ -93,8 +93,8 @@ WITH (lists = 100);
 API to fetch the retrieval
 http://localhost:8080/api/search?question=''
 
-![img_6.png](img_6.png)
-![img_7.png](img_7.png)
+
+![img_9.png](img_9.png)
 
 the similarity scores:
 
@@ -103,3 +103,12 @@ the similarity scores:
 0.49826172775515276
 0.49826172775515276
 0.4861938731010216
+
+
+The Actual response from RAG which reads my Document and give the actual result
+
+![img_7.png](img_7.png)
+
+When I ask the another question which was not part of the doc which I shared
+
+![img_8.png](img_8.png)
